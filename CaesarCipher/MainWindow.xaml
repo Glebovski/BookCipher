@@ -13,7 +13,8 @@
         </Grid.ColumnDefinitions>
         <Menu HorizontalAlignment="Left" Height="21" Margin="10,0,0,0" VerticalAlignment="Top" Width="637">
             <MenuItem Header="Menu">
-                <MenuItem Header="Open" Click="OpenFile_Click"></MenuItem>
+                <MenuItem Header="Open text" Click="OpenFile_Click"></MenuItem>
+                <MenuItem Header="Open poem" Click="OpenFilePoem_Click"></MenuItem>
                 <MenuItem Header="Save as" Click="SaveFile_Click"></MenuItem>
                 <MenuItem Header="About" Click="About_Click"></MenuItem>
             </MenuItem>

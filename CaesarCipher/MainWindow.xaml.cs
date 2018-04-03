@@ -23,14 +23,11 @@ namespace CaesarCipher
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string ABCEng = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890,.()!@#$%^&*_-+=~`";
-        private string ABCUkr = " абвгдеєжзиіїйклмнопрстуфхцчшщьюяАБВГДЕЄЖЗИІЇКЛМНОПРСТУФХЦЧШЩЬЮЯ1234567890,.()!@#$%^&*_-+=~`";
-        private string Abc;
         public MainWindow()
         {
             InitializeComponent();
         }
-        Cipher cezar = new Cipher();
+        Cipher poem = new Cipher();
 
         public char[,] Initialazing()
         {
@@ -48,7 +45,7 @@ namespace CaesarCipher
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if (letter == key.Length)
+                    if (letter >= key.Length)
                         poem[i, j] = ' ';
                     else poem[i, j] = key[letter];
                     letter++;
@@ -66,6 +63,15 @@ namespace CaesarCipher
             filearea.Text= File.ReadAllText(dialog.FileName);
         }
 
+        private void OpenFilePoem_Click(object sender, RoutedEventArgs e)
+        {
+            FileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Text Files | *.txt";
+            dialog.FilterIndex = 1;
+            if (dialog.ShowDialog() == true)
+                Move.Text = File.ReadAllText(dialog.FileName);
+        }
+
         private void SaveFile_Click(object sender, RoutedEventArgs e)
         {
             FileDialog dialog = new SaveFileDialog();
@@ -79,7 +85,7 @@ namespace CaesarCipher
             try
             {
                 char[,] key = Initialazing();
-                filearea.Text = cezar.Encrypt(filearea.Text, key);
+                filearea.Text = poem.Encrypt(filearea.Text.ToLower(), key);
             }
             catch {
                 
@@ -92,7 +98,7 @@ namespace CaesarCipher
             {
                 char[,] key = Initialazing();
                 char[] decoded = filearea.Text.Replace(",","").Replace("/","").Replace(" ","").ToArray();
-                filearea.Text = cezar.Decrypt(decoded, key);
+                filearea.Text = poem.Decrypt(decoded, key);
             }
             catch { }
         }

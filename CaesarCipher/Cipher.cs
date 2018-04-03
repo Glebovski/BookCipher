@@ -15,7 +15,6 @@ namespace CaesarCipher
             int m = key.GetLength(0);
             int n = key.GetLength(1);
             int letter = 0;
-            int problem = 0;
             string numi = String.Empty;
             string numj = String.Empty;
             char[] text = textToEncode.ToArray();
@@ -34,19 +33,45 @@ namespace CaesarCipher
                         result += numi + "/" + numj + ", ";
                         letter++;
                     }
-                    if (letter >= textToEncode.Length && result.Length>=text.Length*7)
+                    if (letter >= textToEncode.Length)
                         return result;
                     
                     else if (letter < textToEncode.Length && j == n-1 && i == m-1)
                     {
                         i = 0;
                         j = 0;
-                        problem++;
-                    }
-                    if (problem > 1)
-                    {
-                        result += numi + "/" + numj + ", ";
-                        letter++;
+
+                        switch (text[letter])
+                        {
+                            case 'q':
+                                text[letter] = 'g';
+                                break;
+                            case 'x':
+                                text[letter] = 'h';
+                                break;
+                            case 'z':
+                                text[letter] = 's';
+                                break;
+                            case 'j':
+                                text[letter] = 'g';
+                                break;
+                            case 'щ':
+                                text[letter] = 'ш';
+                                break;
+                            case 'ц':
+                                text[letter] = 'с';
+                                break;
+                            case 'ф':
+                                text[letter] = 'в';
+                                break;
+                            case 'є':
+                                text[letter] = 'е';
+                                break;
+                            default:
+                                letter++;
+                                break;
+
+                        }
                     }
                 }
             }
@@ -62,8 +87,8 @@ namespace CaesarCipher
             int p = 0;
             for (int i = 0; i < textToDecode.Length; i+=4)
             {
-                k = int.Parse(textToDecode[i].ToString() + textToDecode[i+1].ToString());
-                p = int.Parse(textToDecode[i+2].ToString()+textToDecode[i+3].ToString());
+                k = int.Parse(textToDecode[i].ToString() + textToDecode[(i+1)].ToString());
+                p = int.Parse(textToDecode[(i+2)].ToString()+textToDecode[(i+3)].ToString());
                 result += key[k-1, p-1];
                 
             }
